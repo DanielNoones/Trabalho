@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Covabra Mobile</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Rajdhani:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --neon-cyan: #0ff0fc;
+            --neon-purple: #bc13fe;
+            --neon-pink: #ff2a6d;
+            --dark-bg: #0a0a1a;
+            --card-bg: rgba(20, 20, 40, 0.9);
+        }
+        
+        * {
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+        
+        body {
+            font-family: 'Rajdhani', sans-serif;
+            margin: 0;
+            padding: 10px;
+            background-color: var(--dark-bg);
+            color: white;
+            overflow-x: hidden;
+            touch-action: manipulation;
+            line-height: 1.4;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+        
+        .container {
+            max-width: 100%;
+            margin: 0 auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(5px);
+            border-radius: 12px;
+            border: 1px solid var(--neon-purple);
+            box-shadow: 0 0 15px rgba(188, 19, 254, 0.3);
+            padding: 15px;
+            position: relative;
+            flex: 1;
+        }
+        
+        /* ... (mantenha todos os outros estilos anteriores) ... */
+
+        /* Novo rodapé animado */
+        .footer-animation {
+            margin-top: 20px;
+            text-align: center;
+            padding: 15px;
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .rocket-message {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            color: var(--neon-cyan);
+            text-shadow: 0 0 8px var(--neon-cyan);
+            animation: rocketFloat 3s infinite ease-in-out;
+            display: inline-block;
+            padding: 10px 20px;
+            background: rgba(15, 240, 252, 0.1);
+            border-radius: 30px;
+            border: 1px solid var(--neon-cyan);
+            position: relative;
+        }
+        
+        .rocket-message::after {
+            content: "🚀";
+            position: absolute;
+            right: -25px;
+            top: 50%;
+            transform: translateY(-50%) rotate(45deg);
+            animation: rocketFire 0.5s infinite alternate;
+        }
+        
+        @keyframes rocketFloat {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-5px); }
+        }
+        
+        @keyframes rocketFire {
+            0% { opacity: 0.8; }
+            100% { opacity: 1; text-shadow: 0 0 15px var(--neon-pink); }
+        }
+
+        /* Efeito de partículas no rodapé */
+        .particles {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: -1;
+        }
+        
+        .particle {
+            position: absolute;
+            background: var(--neon-cyan);
+            border-radius: 50%;
+            opacity: 0;
+            animation: particleAnim 4s infinite;
+        }
+        
+        @keyframes particleAnim {
+            0% { 
+                transform: translateY(0) translateX(0);
+                opacity: 0;
+                width: 2px;
+                height: 2px;
+            }
+            10% { opacity: 0.6; }
+            100% { 
+                transform: translateY(-100px) translateX(20px);
+                opacity: 0;
+                width: 1px;
+                height: 1px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ... (mantenha todo o conteúdo anterior) ... -->
+    </div>
+
+    <!-- Novo rodapé animado -->
+    <div class="footer-animation">
+        <div class="particles" id="particles"></div>
+        <div class="rocket-message">Vamos pra cima, não tem ré!</div>
+    </div>
+
+    <script>
+        // ... (mantenha todo o script anterior) ...
+
+        // Animação de partículas
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 15;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // Posição aleatória
+                particle.style.left = `${Math.random() * 100}%`;
+                particle.style.top = `${Math.random() * 100}%`;
+                
+                // Atraso aleatório para animação
+                particle.style.animationDelay = `${Math.random() * 4}s`;
+                
+                // Tamanho aleatório
+                const size = Math.random() * 3 + 1;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // Cor aleatória (entre as cores neon)
+                const colors = [var('--neon-cyan'), var('--neon-purple'), var('--neon-pink')];
+                particle.style.background = colors[Math.floor(Math.random() * colors.length)];
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+
+        // Inicializar animações quando a página carregar
+        window.addEventListener('load', () => {
+            createParticles();
+            
+            // Atualizar partículas periodicamente
+            setInterval(() => {
+                document.getElementById('particles').innerHTML = '';
+                createParticles();
+            }, 4000);
+        });
+    </script>
+</body>
+</html>
